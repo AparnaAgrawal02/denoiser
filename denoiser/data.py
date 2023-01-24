@@ -9,6 +9,7 @@ import json
 import logging
 import os
 import re
+import random
 
 from .audio import Audioset
 
@@ -50,12 +51,12 @@ def match_dns(noisy, clean):
 
 
 def match_files(noisy, clean, matching="sort"):
-    """match_files.
+    """ match_files.
     Sort files to match noisy and clean filenames.
     :param noisy: list of the noisy filenames
     :param clean: list of the clean filenames
     :param matching: the matching function, at this point only sort is supported
-    """
+    
     if matching == "dns":
         # dns dataset filenames don't match when sorted, we have to manually match them
         match_dns(noisy, clean)
@@ -64,6 +65,18 @@ def match_files(noisy, clean, matching="sort"):
         clean.sort()
     else:
         raise ValueError(f"Invalid value for matching {matching}")
+    """
+    l1 = len(noisy)
+    l2 = len(clean)
+    new_noisy = []
+    new_clean = []
+    for i in range(l1):
+        for j in range(l2):
+            new_noisy.append(noisy[i])
+            new_clean.append(clean[j])
+    noisy[:] = new_noisy
+    clean[:] = new_clean
+
 
 
 class NoisyCleanSet:
@@ -86,9 +99,10 @@ class NoisyCleanSet:
             clean = json.load(f)
 
         match_files(noisy, clean, matching)
-        kw = {'length': length, 'stride': stride, 'pad': pad, 'sample_rate': sample_rate}
+
+        kw = {'clean_files':clean,'length': length, 'stride': stride, 'pad': pad, 'sample_rate': sample_rate}
         self.clean_set = Audioset(clean, **kw)
-        self.noisy_set = Audioset(noisy, **kw)
+        self.noisy_set = Audioset(noisy, **kw,tag = 'noisy')
 
         assert len(self.clean_set) == len(self.noisy_set)
 
@@ -97,3 +111,4 @@ class NoisyCleanSet:
 
     def __len__(self):
         return len(self.noisy_set)
+

@@ -11,6 +11,7 @@ from pathlib import Path
 import math
 import os
 import sys
+import numpy as np
 
 import torchaudio
 from torch.nn import functional as F
@@ -48,9 +49,9 @@ def find_audio_files(path, exts=[".wav"], progress=True):
 
 
 class Audioset:
-    def __init__(self, files=None, length=None, stride=None,
+    def __init__(self, files=None,clean_files=None, length=None, stride=None,
                  pad=True, with_path=False, sample_rate=None,
-                 channels=None, convert=False):
+                 channels=None, convert=False,tag = None):
         """
         files should be a list [(file, length)]
         """
@@ -62,6 +63,7 @@ class Audioset:
         self.sample_rate = sample_rate
         self.channels = channels
         self.convert = convert
+        self.tag = tag
         for file, file_length in self.files:
             if length is None:
                 examples = 1
@@ -83,6 +85,7 @@ class Audioset:
                 continue
             num_frames = 0
             offset = 0
+            clean = None
             if self.length is not None:
                 offset = self.stride * index
                 num_frames = self.length
@@ -90,8 +93,36 @@ class Audioset:
                 out, sr = torchaudio.load(str(file),
                                           frame_offset=offset,
                                           num_frames=num_frames or -1)
+                if self.tag=='noisy':
+                    clean, sr = torchaudio.load(str(self.clean_files[index]),
+                                          frame_offset=offset,
+                                          num_frames=num_frames or -1)
+                
+                    ratio = clean.shape[0]//out.shape[0]
+                    new_noise =[]
+                    for _ in range(ratio):
+                        new_noise = np.append(new_noise,out)
+                    mod =  clean.shape[0]%out.shape[0]
+                    new_noise =np.append(new_noise,out[:mod])
+
+                    #adding Noise
+                    out = clean+new_noise
+
             else:
                 out, sr = torchaudio.load(str(file), offset=offset, num_frames=num_frames)
+                if self.tag=='noisy':
+                    clean, sr = torchaudio.load(str(self.clean_files[index]), offset=offset, num_frames=num_frames)
+                
+                    ratio = clean.shape[0]//out.shape[0]
+                    new_noise =[]
+                    for _ in range(ratio):
+                        new_noise = np.append(new_noise,out)
+                    mod =  clean.shape[0]%out.shape[0]
+                    new_noise =np.append(new_noise,out[:mod])
+
+                    #adding Noise
+                    out = clean+new_noise
+
             target_sr = self.sample_rate or sr
             target_channels = self.channels or out.shape[0]
             if self.convert:
@@ -108,7 +139,7 @@ class Audioset:
             if self.with_path:
                 return out, file
             else:
-                return out
+                return out, None
 
 
 if __name__ == "__main__":
@@ -116,3 +147,5 @@ if __name__ == "__main__":
     for path in sys.argv[1:]:
         meta += find_audio_files(path)
     json.dump(meta, sys.stdout, indent=4)
+
+
