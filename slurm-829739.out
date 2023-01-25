@@ -1,0 +1,16 @@
+==========================================
+SLURM_JOB_ID = 829739
+SLURM_NODELIST = gnode019
+SLURM_JOB_GPUS = 1
+==========================================
+/home2/aparna/miniconda3/envs/tool/lib/python3.7/site-packages/hydra/core/utils.py:214: UserWarning: 
+Using config_path to specify the config name is deprecated, specify the config name via config_name
+See https://hydra.cc/docs/next/upgrades/0.11_to_1.0/config_path_changes
+  warnings.warn(category=UserWarning, message=msg)
+/home2/aparna/miniconda3/envs/tool/lib/python3.7/site-packages/hydra/plugins/config_source.py:190: UserWarning: 
+Missing @package directive dset/marathi.yaml in file:///ssd_scratch/cvit/aparna/denoiser/conf.
+See https://hydra.cc/docs/next/upgrades/0.11_to_1.0/adding_a_package_directive
+  warnings.warn(message=msg, category=UserWarning)
+[[36m2023-01-24 20:14:27,628[0m][[34m__main__[0m][[32mINFO[0m] - For logs, checkpoints and samples check /ssd_scratch/cvit/aparna/denoiser/outputs/exp_batch_size=128,demucs.causal=1,demucs.hidden=64,demucs.resample=4,dset=marathi,epochs=250,revecho=1,segment=10,shift=16000,shift_same=True,stride=2[0m
+/var/spool/slurmd/job829739/slurm_script: line 27: 37179 Killed                  python train.py dset=marathi demucs.causal=1 demucs.hidden=64 demucs.resample=4 batch_size=128 revecho=1 segment=10 stride=2 shift=16000 shift_same=True epochs=250 $@
+slurmstepd: error: Detected 1 oom-kill event(s) in StepId=829739.batch. Some of your processes may have been killed by the cgroup out-of-memory handler.

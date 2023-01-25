@@ -1,0 +1,9 @@
+==========================================
+SLURM_JOB_ID = 829744
+SLURM_NODELIST = gnode019
+SLURM_JOB_GPUS = 1
+==========================================
+Traceback (most recent call last):
+  File "train.py", line 12, in <module>
+    import hydra
+ModuleNotFoundError: No module named 'hydra'

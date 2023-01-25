@@ -1,0 +1,9 @@
+dset:
+  train: egs/Marathidataset/tr
+  valid:
+  test: egs/Marathidataset/tt
+  noisy_json:
+  noisy_dir:
+  matching: sort
+eval_every: 4
+
