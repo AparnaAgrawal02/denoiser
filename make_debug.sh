@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 # authors: adiyoss and adefossez
 
-path=egs/debug/tr
+path=./egs/debug/tr
 if [[ ! -e $path ]]; then
     mkdir -p $path
 fi

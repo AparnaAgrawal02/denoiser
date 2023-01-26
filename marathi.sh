@@ -1,4 +1,4 @@
-out=egs/Marathidataset/tt
+out=egs/Marathidataset/tr
 noisy=/ssd_scratch/cvit/aparna/VGGSound/VGGSound
 clean=/ssd_scratch/cvit/aparna/NLTM_Speech/surabhi/train_data/kb_data_clean_m4a/marathi/train/audio
 mkdir -p $out
