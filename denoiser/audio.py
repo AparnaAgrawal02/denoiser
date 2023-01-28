@@ -135,6 +135,7 @@ class Audioset:
                                        f"{target_channels}, but got {sr}")
             if num_frames:
                 out = F.pad(out, (0, num_frames - out.shape[-1]))
+            print("out_shape",out.shape)
             if self.with_path:
                 return out, file
             else:
