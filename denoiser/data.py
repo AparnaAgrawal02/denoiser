@@ -94,19 +94,20 @@ class NoisyCleanSet:
         noisy_json = os.path.join(json_dir, 'noisy.json')
         clean_json = os.path.join(json_dir, 'clean.json')
         with open(noisy_json, 'r') as f:
-            noisy = json.load(f)
+            self.noisy = json.load(f)
         with open(clean_json, 'r') as f:
-            clean = json.load(f)
+            self.clean = json.load(f)
 
-        match_files(noisy, clean, matching)
+        match_files(self.noisy, self.clean, matching)
 
-        kw = {'clean_files':clean,'length': length, 'stride': stride, 'pad': pad, 'sample_rate': sample_rate}
-        self.clean_set = Audioset(clean, **kw)
-        self.noisy_set = Audioset(noisy, **kw,tag = 'noisy')
+        kw = {'clean_files':self.clean,'length': length, 'stride': stride, 'pad': pad, 'sample_rate': sample_rate}
+        self.clean_set = Audioset(self.clean, **kw)
+        self.noisy_set = Audioset(self.noisy, **kw,tag = 'noisy')
 
         assert len(self.clean_set) == len(self.noisy_set)
 
     def __getitem__(self, index):
+        print("data",self.clean[index])
         print(self.noisy_set[index].shape,self.clean_set[index].shape)
         return self.noisy_set[index], self.clean_set[index]
 
