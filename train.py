@@ -48,6 +48,8 @@ def run(args):
     if hasattr(model, 'valid_length'):
         length = model.valid_length(length)
     kwargs = {"matching": args.dset.matching, "sample_rate": args.sample_rate}
+    
+    print("here")
     # Building datasets and loaders
     tr_dataset = NoisyCleanSet(
         args.dset.train, length=length, stride=stride, pad=args.pad, **kwargs)
