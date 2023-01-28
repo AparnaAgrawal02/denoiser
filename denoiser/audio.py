@@ -80,7 +80,7 @@ class Audioset:
         return sum(self.num_examples)
 
     def __getitem__(self, index):
-        for (file,clean_file, _), examples in zip(self.files,self.clean_files, self.num_examples):
+        for (file,_),(clean_file,_), examples in zip(self.files,self.clean_files, self.num_examples):
             if index >= examples:
                 index -= examples
                 continue
