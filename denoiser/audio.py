@@ -135,6 +135,8 @@ class Audioset:
                                        f"{target_channels}, but got {sr}")
             
             print("out_shape",out.shape)
+            if(self.tag=='noisy'):
+                print("clean_shape",clean.shape)
             if self.with_path:
                 return out, file
             else:
