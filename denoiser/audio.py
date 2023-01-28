@@ -112,7 +112,7 @@ class Audioset:
 
                     #adding Noise
                     out = clean[0]+new_noise
-                    out = torch.from_numpy([out])
+                    out = torch.from_numpy([out].numpy())
                     print(out.shape)
 
             else:
@@ -132,7 +132,7 @@ class Audioset:
 
                     #adding Noise
                     out = clean[0]+new_noise
-                    out = torch.from_numpy([out])
+                    out = torch.from_numpy([out].numpy())
                     print(out.shape)
 
             target_sr = self.sample_rate or sr
