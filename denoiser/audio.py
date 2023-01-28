@@ -138,7 +138,7 @@ class Audioset:
             if self.with_path:
                 return out, file
             else:
-                return out, None
+                return out
 
 
 if __name__ == "__main__":
