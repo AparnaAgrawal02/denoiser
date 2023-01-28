@@ -99,7 +99,11 @@ class Audioset:
                     clean, sr = torchaudio.load(str(self.clean_files[index]),
                                           frame_offset=offset,
                                           num_frames=num_frames or -1)
-                
+                    ratio = clean.shape[1] / out.shape[1]
+                    mod = clean.shape[1] % out.shape[1]
+                    for i in range(ratio):
+                        out = np.concatenate((out, out), axis=1)
+                    out = np.concatenate((out, out[:,:mod]), axis=1)
                     out = out[:, : clean.shape[1]]
                     print(clean.shape,out.shape)
                     out = clean + out
@@ -108,7 +112,11 @@ class Audioset:
                 out, sr = torchaudio.load(str(file), offset=offset, num_frames=num_frames)
                 if self.tag=='noisy':
                     clean, sr = torchaudio.load(self.clean_files[index][0], offset=offset, num_frames=num_frames)
-                    
+                    ratio = clean.shape[1] / out.shape[1]
+                    mod = clean.shape[1] % out.shape[1]
+                    for i in range(ratio):
+                        out = np.concatenate((out, out), axis=1)
+                    out = np.concatenate((out, out[:,:mod]), axis=1)
                     out = out[:, : clean.shape[1]]
                     print(clean.shape,out.shape)
                     out = clean + out
