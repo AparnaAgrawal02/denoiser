@@ -1,6 +1,5 @@
 # Copyright (c) Facebook, Inc. and its affiliates.
 # All rights reserved.
-#
 # This source code is licensed under the license found in the
 # LICENSE file in the root directory of this source tree.
 # author: adefossez
@@ -81,7 +80,7 @@ class Audioset:
         return sum(self.num_examples)
 
     def __getitem__(self, index):
-        for (file, _), examples in zip(self.files, self.num_examples):
+        for (file,clean_file, _), examples in zip(self.files,self.clean_files, self.num_examples):
             if index >= examples:
                 index -= examples
                 continue
@@ -96,7 +95,7 @@ class Audioset:
                                           frame_offset=offset,
                                           num_frames=num_frames or -1)
                 if self.tag=='noisy':
-                    clean, sr = torchaudio.load(self.clean_files[index][0],
+                    clean, sr = torchaudio.load(clean_file,
                                           frame_offset=offset,
                                           num_frames=num_frames or -1)
                     ratio = clean.shape[1] / out.shape[1]
@@ -112,7 +111,7 @@ class Audioset:
                 out, sr = torchaudio.load(str(file), offset=offset, num_frames=num_frames)
                 if self.tag=='noisy':
                     print("clean_file",self.clean_files[index][0])
-                    clean, sr = torchaudio.load(self.clean_files[index][0], offset=offset, num_frames=num_frames)
+                    clean, sr = torchaudio.load(clean_file, offset=offset, num_frames=num_frames)
                     ratio = clean.shape[1] // out.shape[1]
                     
                     mod = clean.shape[1] % out.shape[1]
