@@ -138,7 +138,9 @@ class Audioset:
             
             if num_frames:
                 out = F.pad(out, (0, num_frames - out.shape[-1]))
-            print("out_shape",out.shape,"clean_shape",clean.shape)
+            print("out_shape",out.shape)
+            if self.tag=='noisy':
+                print("clean_shape",clean.shape)
             if self.with_path:
                 return out, file
             else:
