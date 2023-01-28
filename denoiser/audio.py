@@ -101,14 +101,16 @@ class Audioset:
                                           num_frames=num_frames or -1)
                 
                     out = out[:, : clean.shape[1]]
+                    print(clean.shape,out.shape)
                     out = clean + out
 
             else:
                 out, sr = torchaudio.load(str(file), offset=offset, num_frames=num_frames)
                 if self.tag=='noisy':
                     clean, sr = torchaudio.load(self.clean_files[index][0], offset=offset, num_frames=num_frames)
-                    print(clean.shape,out.shape)
+                    
                     out = out[:, : clean.shape[1]]
+                    print(clean.shape,out.shape)
                     out = clean + out
 
             target_sr = self.sample_rate or sr
