@@ -100,40 +100,16 @@ class Audioset:
                                           frame_offset=offset,
                                           num_frames=num_frames or -1)
                 
-                    clean = clean.numpy()
-                    out = out.numpy()
-                    print(clean[0].shape,out[0].shape)
-                    ratio = clean[0].shape[0]//out[0].shape[0]
-                    new_noise =[]
-                    for _ in range(ratio):
-                        new_noise = np.append(new_noise,out[0])
-                    mod =  clean[0].shape[0]%out[0].shape[0]
-                    new_noise =np.append(new_noise,out[0][:mod])
-
-                    #adding Noise
-                    out = clean[0]+new_noise
-                    out = torch.from_numpy(np.array([out]))
-                    print(out.shape)
+                    out = out[:, : clean.shape[1]]
+                    out = clean + out
 
             else:
                 out, sr = torchaudio.load(str(file), offset=offset, num_frames=num_frames)
                 if self.tag=='noisy':
                     clean, sr = torchaudio.load(self.clean_files[index][0], offset=offset, num_frames=num_frames)
                     print(clean.shape,out.shape)
-                    clean = clean.numpy()
-                    out = out.numpy()
-                    print(clean[0].shape,out[0].shape)
-                    ratio = clean[0].shape[0]//out[0].shape[0]
-                    new_noise =[]
-                    for _ in range(ratio):
-                        new_noise = np.append(new_noise,out[0])
-                    mod =  clean[0].shape[0]%out[0].shape[0]
-                    new_noise =np.append(new_noise,out[0][:mod])
-
-                    #adding Noise
-                    out = clean[0]+new_noise
-                    out = torch.from_numpy(np.array([out]))
-                    print(out.shape)
+                    out = out[:, : clean.shape[1]]
+                    out = clean + out
 
             target_sr = self.sample_rate or sr
             target_channels = self.channels or out.shape[0]
