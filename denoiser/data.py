@@ -106,7 +106,7 @@ class NoisyCleanSet:
         assert len(self.clean_set) == len(self.noisy_set)
 
     def __getitem__(self, index):
-        print("data",self.clean[index])
+        #print("data",self.clean[index])
         print(self.noisy_set[index].shape,self.clean_set[index].shape)
         return self.noisy_set[index], self.clean_set[index]
 
