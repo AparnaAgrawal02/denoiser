@@ -74,8 +74,7 @@ def match_files(noisy, clean, matching="sort"):
         for j in range(l2):
             new_noisy.append(noisy[i])
             new_clean.append(clean[j])
-    noisy[:] = new_noisy
-    clean[:] = new_clean
+    return new_noisy, new_clean
 
 
 
@@ -98,7 +97,7 @@ class NoisyCleanSet:
         with open(clean_json, 'r') as f:
             self.clean = json.load(f)
 
-        match_files(self.noisy, self.clean, matching)
+        self.noisy, self.clean = match_files(self.noisy, self.clean, matching)
 
         kw = {'clean_files':self.clean,'length': length, 'stride': stride, 'pad': pad, 'sample_rate': sample_rate}
         self.clean_set = Audioset(self.clean, **kw)
