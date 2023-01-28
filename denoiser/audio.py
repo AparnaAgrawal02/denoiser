@@ -95,9 +95,7 @@ class Audioset:
                                           frame_offset=offset,
                                           num_frames=num_frames or -1)
                 if self.tag=='noisy':
-                    clean, sr = torchaudio.load(clean_file,
-                                          frame_offset=offset,
-                                          num_frames=num_frames or -1)
+                    clean, sr = torchaudio.load(clean_file)
                     ratio = clean.shape[1] / out.shape[1]
                     mod = clean.shape[1] % out.shape[1]
                     for i in range(ratio):
