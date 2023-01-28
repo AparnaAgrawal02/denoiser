@@ -121,8 +121,8 @@ class Audioset:
                     out = out[:, : clean.shape[1]]
                     print(clean.shape,out.shape)
                     out = clean + out
-                else:
-                    print("actual clean_file",file)
+                
+                print("actual clean_file",file,clean_file)
             target_sr = self.sample_rate or sr
             target_channels = self.channels or out.shape[0]
             if self.convert:
@@ -135,9 +135,10 @@ class Audioset:
                     raise RuntimeError(f"Expected {file} to have sample rate of "
                                        f"{target_channels}, but got {sr}")
             
-            print("out_shape",out.shape)
-            if(self.tag=='noisy'):
-                print("clean_shape",clean.shape)
+            
+            if num_frames:
+                out = F.pad(out, (0, num_frames - out.shape[-1]))
+            print("out_shape",out.shape,"clean_shape",clean.shape)
             if self.with_path:
                 return out, file
             else:
