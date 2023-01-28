@@ -113,6 +113,7 @@ class Audioset:
                     #adding Noise
                     out = clean[0]+new_noise
                     out = torch.from_numpy(out)
+                    print(out.shape)
 
             else:
                 out, sr = torchaudio.load(str(file), offset=offset, num_frames=num_frames)
@@ -132,6 +133,7 @@ class Audioset:
                     #adding Noise
                     out = clean[0]+new_noise
                     out = torch.from_numpy(out)
+                    print(out.shape)
 
             target_sr = self.sample_rate or sr
             target_channels = self.channels or out.shape[0]
