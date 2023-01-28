@@ -121,18 +121,17 @@ class Audioset:
                     print(clean.shape,out.shape)
                     clean = clean.numpy()
                     out = out.numpy()
-                    print(clean.shape,out.shape)
-                    ratio = clean.shape[0]//out.shape[0]
+                    print(clean[0].shape,out[0].shape)
+                    ratio = clean[0].shape[0]//out[0].shape[0]
                     new_noise =[]
                     for _ in range(ratio):
-                        new_noise = np.append(new_noise,out)
-                    mod =  clean.shape[0]%out.shape[0]
-                    new_noise =np.append(new_noise,out[:mod])
+                        new_noise = np.append(new_noise,out[0])
+                    mod =  clean[0].shape[0]%out[0].shape[0]
+                    new_noise =np.append(new_noise,out[0][:mod])
 
                     #adding Noise
-                    out = clean+new_noise
+                    out = clean[0]+new_noise
                     out = torch.from_numpy(out)
-
 
             target_sr = self.sample_rate or sr
             target_channels = self.channels or out.shape[0]
