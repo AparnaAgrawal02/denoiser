@@ -122,7 +122,8 @@ class Audioset:
                     out = out[:, : clean.shape[1]]
                     print(clean.shape,out.shape)
                     out = clean + out
-
+                else:
+                    print("actual clean_file",file)
             target_sr = self.sample_rate or sr
             target_channels = self.channels or out.shape[0]
             if self.convert:
