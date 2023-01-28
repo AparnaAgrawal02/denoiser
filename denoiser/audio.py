@@ -64,6 +64,7 @@ class Audioset:
         self.channels = channels
         self.convert = convert
         self.tag = tag
+        self.clean_files = clean_files
         for file, file_length in self.files:
             if length is None:
                 examples = 1
