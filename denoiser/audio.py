@@ -133,8 +133,7 @@ class Audioset:
                 if out.shape[0] != target_channels:
                     raise RuntimeError(f"Expected {file} to have sample rate of "
                                        f"{target_channels}, but got {sr}")
-            if num_frames:
-                out = F.pad(out, (0, num_frames - out.shape[-1]))
+            
             print("out_shape",out.shape,"clean_shape",clean.shape)
             if self.with_path:
                 return out, file
