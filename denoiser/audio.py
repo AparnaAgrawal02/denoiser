@@ -12,6 +12,7 @@ import math
 import os
 import sys
 import numpy as np
+import torch
 
 import torchaudio
 from torch.nn import functional as F
@@ -99,20 +100,8 @@ class Audioset:
                                           frame_offset=offset,
                                           num_frames=num_frames or -1)
                 
-                    ratio = clean.shape[0]//out.shape[0]
-                    new_noise =[]
-                    for _ in range(ratio):
-                        new_noise = np.append(new_noise,out)
-                    mod =  clean.shape[0]%out.shape[0]
-                    new_noise =np.append(new_noise,out[:mod])
-
-                    #adding Noise
-                    out = clean+new_noise
-
-            else:
-                out, sr = torchaudio.load(str(file), offset=offset, num_frames=num_frames)
-                if self.tag=='noisy':
-                    clean, sr = torchaudio.load(self.clean_files[index], offset=offset, num_frames=num_frames)
+                    clean = clean.numpy()
+                    out = out.numpy()
                     print(clean.shape,out.shape)
                     ratio = clean.shape[0]//out.shape[0]
                     new_noise =[]
@@ -123,6 +112,27 @@ class Audioset:
 
                     #adding Noise
                     out = clean+new_noise
+                    out = torch.from_numpy(out)
+
+            else:
+                out, sr = torchaudio.load(str(file), offset=offset, num_frames=num_frames)
+                if self.tag=='noisy':
+                    clean, sr = torchaudio.load(self.clean_files[index], offset=offset, num_frames=num_frames)
+                    print(clean.shape,out.shape)
+                    clean = clean.numpy()
+                    out = out.numpy()
+                    print(clean.shape,out.shape)
+                    ratio = clean.shape[0]//out.shape[0]
+                    new_noise =[]
+                    for _ in range(ratio):
+                        new_noise = np.append(new_noise,out)
+                    mod =  clean.shape[0]%out.shape[0]
+                    new_noise =np.append(new_noise,out[:mod])
+
+                    #adding Noise
+                    out = clean+new_noise
+                    out = torch.from_numpy(out)
+
 
             target_sr = self.sample_rate or sr
             target_channels = self.channels or out.shape[0]
