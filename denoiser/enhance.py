@@ -91,14 +91,17 @@ def get_dataset(args, sample_rate, channels):
     if paths.noisy_json:
         with open(paths.noisy_json) as f:
             files = json.load(f)
+        with open(paths.clean_json) as f:
+            clean_files = json.load(f)
     elif paths.noisy_dir:
         files = find_audio_files(paths.noisy_dir)
+        clean_files = find_audio_files(paths.clean_dir)
     else:
         logger.warning(
             "Small sample set was not provided by either noisy_dir or noisy_json. "
             "Skipping enhancement.")
         return None
-    return Audioset(files, with_path=True,
+    return Audioset(files,clean_files=clean_files, with_path=True,
                     sample_rate=sample_rate, channels=channels, convert=True)
 
 
