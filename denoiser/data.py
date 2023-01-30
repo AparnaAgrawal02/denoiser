@@ -10,6 +10,8 @@ import logging
 import os
 import re
 import random
+import pandas as pd
+
 
 from .audio import Audioset
 
@@ -94,10 +96,10 @@ class NoisyCleanSet:
         clean_json = os.path.join(json_dir, 'clean.json')
 
         print("load pe phat raha")
-        with open(noisy_json, 'r') as f:
-            self.noisy = json.load(f)
-        with open(clean_json, 'r') as f:
-            self.clean = json.load(f)
+        
+        self.noisy = pd.read_json(noisy_json)
+      
+        self.clean =  pd.read_json(clean_json)
 
         self.noisy, self.clean = match_files(self.noisy, self.clean, matching)
         print("fine")
