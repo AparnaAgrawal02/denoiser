@@ -51,8 +51,8 @@ def run(args):
     
     print("here")
     # Building datasets and loaders
-    #tr_dataset = NoisyCleanSet(
-    #    args.dset.train, length=length, stride=stride, pad=args.pad, **kwargs)
+    tr_dataset = NoisyCleanSet(
+        args.dset.train, length=length, stride=stride, pad=args.pad, **kwargs)
     print("here1")    
     tr_loader = distrib.loader(
         tr_dataset, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers)

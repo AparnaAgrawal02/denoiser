@@ -98,10 +98,14 @@ class NoisyCleanSet:
             self.clean = json.load(f)
 
         self.noisy, self.clean = match_files(self.noisy, self.clean, matching)
+        print("fine")
 
         kw = {'clean_files':self.clean,'length': length, 'stride': stride, 'pad': pad, 'sample_rate': sample_rate}
+        print("x")
         self.clean_set = Audioset(self.clean, **kw)
+        print("x1")
         self.noisy_set = Audioset(self.noisy, **kw,tag = 'noisy')
+        print("x2")
 
         assert len(self.clean_set) == len(self.noisy_set)
 
