@@ -71,6 +71,8 @@ def match_files(noisy, clean, matching="sort"):
 
     new_noisy = []
     new_clean = []
+    noisy = noisy.split("\n")
+    clean = clean.split("\n")
     for row_noisy in noisy:
         for row_clean in clean:
             new_noisy.append([row_noisy.split(" ")[0],row_noisy.split(" ")[1] ])
