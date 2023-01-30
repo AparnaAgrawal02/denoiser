@@ -96,10 +96,9 @@ class NoisyCleanSet:
         clean_json = os.path.join(json_dir, 'clean.json')
 
         print("load pe phat raha")
-        
-        self.noisy = pd.read_json(noisy_json)
+        with open(noisy_json, 'r') as f:
+            self.noisy = json.load(f)
       
-        self.clean =  pd.read_json(clean_json)
         print(self.noisy)
 
         self.noisy, self.clean = match_files(self.noisy, self.clean, matching)
