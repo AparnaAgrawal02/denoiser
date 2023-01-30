@@ -53,18 +53,23 @@ def run(args):
     # Building datasets and loaders
     tr_dataset = NoisyCleanSet(
         args.dset.train, length=length, stride=stride, pad=args.pad, **kwargs)
+    print("here1")    
     tr_loader = distrib.loader(
         tr_dataset, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers)
+    print("here2")    
     if args.dset.valid:
         cv_dataset = NoisyCleanSet(args.dset.valid, **kwargs)
         cv_loader = distrib.loader(cv_dataset, batch_size=1, num_workers=args.num_workers)
     else:
         cv_loader = None
+    
     if args.dset.test:
         tt_dataset = NoisyCleanSet(args.dset.test, **kwargs)
         tt_loader = distrib.loader(tt_dataset, batch_size=1, num_workers=args.num_workers)
+    
     else:
         tt_loader = None
+    print("here3")
     data = {"tr_loader": tr_loader, "cv_loader": cv_loader, "tt_loader": tt_loader}
 
     if torch.cuda.is_available():
