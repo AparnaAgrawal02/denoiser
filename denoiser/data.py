@@ -72,10 +72,10 @@ def match_files(noisy, clean, matching="sort"):
     l2 = len(clean)
     new_noisy = []
     new_clean = []
-    for i in range(l1):
-        for j in range(l2):
-            new_noisy.append(noisy[i])
-            new_clean.append(clean[j])
+    for row_noisy in noisy.rows:
+        for row_clean in clean.rows:
+            new_noisy.append([row_noisy['0'],row_noisy['1']])
+            new_clean.append([row_clean['0'],row_clean['1']])
     return new_noisy, new_clean
 
 
@@ -96,10 +96,12 @@ class NoisyCleanSet:
         clean_json = os.path.join(json_dir, 'clean.json')
 
         print("load pe phat raha")
-        with open(noisy_json, 'r') as f:
-            self.noisy = json.load(f)
       
-        print(self.noisy)
+        self.noisy = json.load(noisy_json)
+        
+        self.clean = json.load(clean_json)
+            
+        
 
         self.noisy, self.clean = match_files(self.noisy, self.clean, matching)
         print("fine")
