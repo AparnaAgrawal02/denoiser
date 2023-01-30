@@ -71,10 +71,10 @@ def match_files(noisy, clean, matching="sort"):
 
     new_noisy = []
     new_clean = []
-    for row_noisy in noisy.iterrows():
-        for row_clean in clean.iterrows():
-            new_noisy.append([row_noisy[0],row_noisy[1]])
-            new_clean.append([row_clean[0],row_clean[1]])
+    for row_noisy in noisy:
+        for row_clean in clean:
+            new_noisy.append([row_noisy.split(" ")[0],row_noisy.split(" ")[1] ])
+            new_clean.append([row_clean.split(" ")[0],row_clean.split(" ")[1] ])
     return new_noisy, new_clean
 
 
