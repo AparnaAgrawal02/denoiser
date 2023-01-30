@@ -92,6 +92,8 @@ class NoisyCleanSet:
         """
         noisy_json = os.path.join(json_dir, 'noisy.json')
         clean_json = os.path.join(json_dir, 'clean.json')
+
+        print("load pe phat raha")
         with open(noisy_json, 'r') as f:
             self.noisy = json.load(f)
         with open(clean_json, 'r') as f:
