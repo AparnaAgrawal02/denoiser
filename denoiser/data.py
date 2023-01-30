@@ -68,8 +68,7 @@ def match_files(noisy, clean, matching="sort"):
     else:
         raise ValueError(f"Invalid value for matching {matching}")
     """
-    l1 = len(noisy)
-    l2 = len(clean)
+
     new_noisy = []
     new_clean = []
     for row_noisy in noisy.iterrows():
