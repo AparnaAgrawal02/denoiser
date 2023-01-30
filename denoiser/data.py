@@ -100,6 +100,7 @@ class NoisyCleanSet:
         self.noisy = pd.read_json(noisy_json)
       
         self.clean =  pd.read_json(clean_json)
+        print(self.noisy)
 
         self.noisy, self.clean = match_files(self.noisy, self.clean, matching)
         print("fine")
