@@ -97,9 +97,9 @@ class NoisyCleanSet:
 
         print("load pe phat raha")
       
-        self.noisy = json.load(noisy_json)
+        self.noisy = pd.read_json(noisy_json)
         
-        self.clean = json.load(clean_json)
+        self.clean = pd.read_json(clean_json)
             
         
 
