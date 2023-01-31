@@ -11,6 +11,7 @@ import os
 import re
 import random
 import pandas as pd
+import ijson
 
 
 from .audio import Audioset
@@ -92,16 +93,21 @@ class NoisyCleanSet:
         :param pad: pad the end of the sequence with zeros
         :param sample_rate: the signals sampling rate
         """
+
+       
+
         noisy_json = os.path.join(json_dir, 'noisy.json')
         clean_json = os.path.join(json_dir, 'clean.json')
 
         print("load pe phat raha")
-      
-        self.noisy = pd.read_json(noisy_json,chunksize=1000,lines=True, typ="series")
-        for chunk in self.noisy:
-            print(chunk)
-        
-        self.clean = pd.read_json(clean_json,chunksize=1000,lines=True,typ="series")
+
+        with open(noisy_json, "rb") as f:
+            for record in ijson.items(f, "item"):
+                print(record)
+        with open(clean_json, "rb") as f:
+            for record in ijson.items(f, "item"):
+                print(record)
+
         
         
 
