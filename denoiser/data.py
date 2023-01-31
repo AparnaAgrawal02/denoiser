@@ -97,12 +97,12 @@ class NoisyCleanSet:
 
         print("load pe phat raha")
       
-        self.noisy = pd.read_json(noisy_json,chunksize=1000,lines=True)
+        self.noisy = pd.read_json(noisy_json,chunksize=1000,lines=True, orient=str)
         for chunk in self.noisy:
             print(chunk)
             break
         
-        self.clean = pd.read_json(clean_json,chunksize=1000,lines=True)
+        self.clean = pd.read_json(clean_json,chunksize=1000,lines=True, orient=str)
         
         
 
