@@ -71,8 +71,7 @@ def match_files(noisy, clean, matching="sort"):
 
     new_noisy = []
     new_clean = []
-    noisy = noisy.split("\n")
-    clean = clean.split("\n")
+    
     for row_noisy in noisy:
         for row_clean in clean:
             new_noisy.append([row_noisy.split(" ")[0],row_noisy.split(" ")[1] ])
@@ -99,20 +98,22 @@ class NoisyCleanSet:
         print("load pe phat raha")
       
         self.noisy = pd.read_json(noisy_json,chunksize=1000,lines=True)
+        for chunk in self.noisy:
+            print(chunk)
+            break
         
         self.clean = pd.read_json(clean_json,chunksize=1000,lines=True)
-            
+        
         
 
         self.noisy, self.clean = match_files(self.noisy, self.clean, matching)
-        print("fine")
-
+      
         kw = {'clean_files':self.clean,'length': length, 'stride': stride, 'pad': pad, 'sample_rate': sample_rate}
-        print("x")
+     
         self.clean_set = Audioset(self.clean, **kw)
-        print("x1")
+        
         self.noisy_set = Audioset(self.noisy, **kw,tag = 'noisy')
-        print("x2")
+        
 
         assert len(self.clean_set) == len(self.noisy_set)
 
