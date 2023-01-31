@@ -114,13 +114,14 @@ class NoisyCleanSet:
         
 
         self.noisy, self.clean = match_files(self.noisy, self.clean, matching)
+        print("match ho gya")
       
         kw = {'clean_files':self.clean,'length': length, 'stride': stride, 'pad': pad, 'sample_rate': sample_rate}
      
         self.clean_set = Audioset(self.clean, **kw)
         
         self.noisy_set = Audioset(self.noisy, **kw,tag = 'noisy')
-        
+        print("audioset ho gya")
 
         assert len(self.clean_set) == len(self.noisy_set)
 
