@@ -77,6 +77,7 @@ def match_files(noisy, clean, matching="sort"):
         for row_clean in clean:
             new_noisy.append(row_noisy)
             new_clean.append(row_clean)
+            print(len(new_noisy),len(new_clean))
     return new_noisy, new_clean
 
 
