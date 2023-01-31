@@ -75,8 +75,8 @@ def match_files(noisy, clean, matching="sort"):
     
     for row_noisy in noisy:
         for row_clean in clean:
-            new_noisy.append([row_noisy.split(" ")[0],row_noisy.split(" ")[1] ])
-            new_clean.append([row_clean.split(" ")[0],row_clean.split(" ")[1] ])
+            new_noisy.append(row_noisy)
+            new_clean.append(row_clean)
     return new_noisy, new_clean
 
 
@@ -101,12 +101,14 @@ class NoisyCleanSet:
 
         print("load pe phat raha")
 
+        self.noisy = []
+        self.clean = []
         with open(noisy_json, "rb") as f:
             for record in ijson.items(f, "item"):
-                print(record)
+                self.noisy.append(record)
         with open(clean_json, "rb") as f:
             for record in ijson.items(f, "item"):
-                print(record)
+                self.clean.append(record)
 
         
         
